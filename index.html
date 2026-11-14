@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Резерв — лучший склад для вашего груза</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#E8ECFF;--ink:#151A78;--tx:#37408A;--blue:#3A2FE8;--sky:#9FB2FF;--g:rgba(255,255,255,.46);--gb:rgba(255,255,255,.75);--sh:rgba(58,47,232,.18);--ok:#12A579;--bad:#D6383F;--b1:#9FA8FF;--b2:#6A6CFF;--b3:#B7E4FF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A0A3A;--ink:#EAF2FF;--tx:#B9CBEE;--blue:#6A6CFF;--g:rgba(255,255,255,.07);--gb:rgba(255,255,255,.2);--sh:rgba(0,0,0,.4);--b1:#2D6BD6;--b2:#5A4BFF;--b3:#1B3E86;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0A0A3A;--ink:#EAF2FF;--tx:#B9CBEE;--blue:#6A6CFF;--g:rgba(255,255,255,.07);--gb:rgba(255,255,255,.2);--sh:rgba(0,0,0,.4);--b1:#2D6BD6;--b2:#5A4BFF;--b3:#1B3E86;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+*,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 16px/1.5 Montserrat,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{color:var(--ink);font-weight:800;letter-spacing:-.02em}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg i{position:absolute;border-radius:50%;filter:blur(60px);opacity:.75;animation:fl 14s ease-in-out infinite alternate}
+.bg i:nth-child(1){width:70vw;height:70vw;background:#5A5CFF;top:-10vw;left:-20vw}
+.bg i:nth-child(2){width:60vw;height:60vw;background:#8EB8FF;top:45vh;right:-25vw;animation-delay:-5s}
+.bg i:nth-child(3){width:55vw;height:55vw;background:#C58BFF;bottom:-10vw;left:10vw;animation-delay:-9s;opacity:.5}
+@keyframes fl{to{transform:translate3d(8vw,6vh,0) scale(1.15)}}
+.gl{position:relative;overflow:hidden;border-radius:26px;background:linear-gradient(140deg,var(--g),rgba(255,255,255,.06));backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);border:1px solid var(--gb);box-shadow:inset 0 1.5px 1px rgba(255,255,255,.8),inset 0 -1px 1px rgba(255,255,255,.12),0 14px 34px var(--sh)}
+.gl::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(160px circle at var(--mx,30%) var(--my,0%),rgba(255,255,255,.55),transparent 65%);opacity:var(--o,.35);transition:opacity .3s}
+.gl.hot{--o:.9}
+.wrap{padding:0 20px}
+section{padding:56px 0 8px}
+h2{font-size:28px;line-height:1.15;margin-bottom:20px}
+.hd{position:fixed;top:0;left:0;right:0;z-index:40;padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 0}
+.hd .gl{display:flex;align-items:center;justify-content:space-between;padding:6px 8px 6px 16px;border-radius:999px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:20px;color:var(--ink)}
+.logo b{width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,var(--sky),var(--blue));box-shadow:inset 0 2px 3px rgba(255,255,255,.8)}
+.ic{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;position:relative;z-index:1}
+.ic span,.ic span::before{display:block;width:20px;height:2px;border-radius:2px;background:var(--ink);transition:.3s}
+.ic span{position:relative}.ic span::before{content:"";position:absolute;top:7px}
+.open .ic span{background:transparent}.open .ic span::before{top:0;transform:rotate(45deg);box-shadow:0 0 0 0 var(--ink)}
+.open .ic span::after{content:"";position:absolute;width:20px;height:2px;background:var(--ink);transform:rotate(-45deg)}
+.menu{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:90px 28px 40px;background:rgba(10,30,80,.35);backdrop-filter:blur(28px) saturate(160%);-webkit-backdrop-filter:blur(28px) saturate(160%);opacity:0;visibility:hidden;transition:.35s}
+.open .menu{opacity:1;visibility:visible}
+.menu a{font-size:32px;font-weight:800;color:#fff;text-decoration:none;padding:8px 0;transform:translateY(20px);opacity:0;transition:.45s}
+.open .menu a{transform:none;opacity:1}
+.open .menu a:nth-child(2){transition-delay:.06s}.open .menu a:nth-child(3){transition-delay:.12s}.open .menu a:nth-child(4){transition-delay:.18s}
+.btn{position:relative;overflow:hidden;min-height:52px;padding:0 26px;border-radius:999px;font-weight:700;color:#fff;background:linear-gradient(180deg,#7B7DFF,#3A2FE8);box-shadow:inset 0 2px 2px rgba(255,255,255,.55),0 10px 24px rgba(58,47,232,.45);transition:transform .2s}
+.btn:active{transform:scale(.95)}
+.btn.sec{color:var(--ink);background:var(--g);border:1px solid var(--gb);box-shadow:inset 0 1px 1px rgba(255,255,255,.8);backdrop-filter:blur(14px)}
+.btn[disabled]{opacity:.55;pointer-events:none}
+.rp{position:absolute;border-radius:50%;background:rgba(255,255,255,.6);transform:scale(0);animation:rp .6s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(1);opacity:0}}
+.hero{padding-top:104px;position:relative}
+.hero h1{font-size:clamp(38px,11.4vw,54px);line-height:1.04;margin-bottom:16px}
+.hero p.l{font-size:17px;max-width:30ch;margin-bottom:24px}
+.mt{font-size:13px;margin-top:14px;opacity:.85}
+.scene{position:relative;height:270px;margin-top:20px;perspective:800px}
+.scene svg{width:100%;height:100%;overflow:visible;transform:rotateX(var(--rx,0)) rotateY(var(--ry,0));transition:transform .2s;animation:bob 6s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -8px}}
+.chip{position:absolute;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:700;color:var(--ink);animation:bob 5s ease-in-out infinite}
+.chip.a{left:0;top:18px}.chip.b{right:0;bottom:30px;animation-delay:-2.5s}
+.chip em{font-style:normal;color:var(--ok)}
+.card3{display:grid;gap:12px}
+.pc{padding:18px 20px}.pc h3{font-size:18px;margin-bottom:4px}
+.pc .n{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:14px;margin-bottom:10px;background:linear-gradient(135deg,rgba(124,196,255,.7),rgba(255,255,255,.3));font-weight:800;color:var(--ink)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.g2 .pc{padding:16px}.g2 h3{font-size:16px}.g2 p{font-size:14px}
+.route{position:relative;padding-left:52px}
+.road{position:absolute;left:12px;top:0;bottom:0;width:20px;border-radius:10px;background:linear-gradient(90deg,rgba(21,26,120,.2),rgba(21,26,120,.1))}
+.road::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;border-left:2px dashed rgba(255,255,255,.9)}
+.truck{position:absolute;left:11px;top:calc(var(--p,0)*100%);width:22px;z-index:2;transform:translateY(-50%);filter:drop-shadow(0 6px 6px rgba(0,0,0,.3));transition:transform 1.2s cubic-bezier(.6,0,.4,1),left 1.2s cubic-bezier(.6,0,.4,1)}
+.truck.go{left:140vw}
+.st{padding:18px 20px;margin-bottom:14px;opacity:.55;transform:scale(.97);transition:.5s}
+.st.on{opacity:1;transform:none;--o:.8}
+.st h3{font-size:19px}
+.st small{display:block;font-weight:700;color:var(--blue);margin-bottom:2px}
+.calc{padding:22px 20px}
+.fld{margin-bottom:18px}
+.fld label,.fld .lb{display:flex;justify-content:space-between;font-weight:700;color:var(--ink);margin-bottom:8px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:44px;background:transparent}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:9px;background:linear-gradient(90deg,var(--blue) var(--v,30%),rgba(120,150,210,.3) var(--v,30%))}
+input[type=range]::-moz-range-track{height:10px;border-radius:9px;background:rgba(120,150,210,.3)}
+input[type=range]::-moz-range-progress{height:10px;border-radius:9px;background:var(--blue)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-10px;border-radius:50%;background:#fff;border:1px solid var(--gb);box-shadow:0 4px 12px rgba(21,26,120,.35),inset 0 -3px 5px rgba(58,47,232,.25)}
+input[type=range]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:#fff;border:0;box-shadow:0 4px 12px rgba(21,26,120,.35)}
+.tgl{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:48px;text-align:left;font-weight:700;color:var(--ink)}
+.sw{width:56px;height:32px;border-radius:99px;background:rgba(120,150,210,.35);position:relative;transition:.3s;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3);transition:.35s cubic-bezier(.3,1.6,.5,1)}
+[aria-pressed=true] .sw{background:var(--blue)}[aria-pressed=true] .sw::after{transform:translateX(24px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.cp{min-height:44px;padding:0 16px;border-radius:99px;font-weight:700;color:var(--ink);background:var(--g);border:1px solid var(--gb);transition:.25s}
+.cp[aria-pressed=true]{background:var(--blue);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(58,47,232,.4)}
+.bars{display:flex;align-items:flex-end;gap:10px;height:190px;margin:22px 0 10px;padding:0 4px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-weight:800;color:var(--ink);font-size:13px;text-align:center}
+.bar div{width:100%;border-radius:16px 16px 8px 8px;background:linear-gradient(180deg,var(--b1),var(--b2));box-shadow:inset 0 2px 2px rgba(255,255,255,.7);transition:height .7s cubic-bezier(.3,1.3,.5,1);margin:4px 0}
+.bar.best div{background:linear-gradient(180deg,#5CF0C0,var(--ok));box-shadow:inset 0 2px 2px rgba(255,255,255,.7),0 0 26px rgba(18,165,121,.6)}
+.sum{padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.18);border:1px solid var(--gb);margin-bottom:14px;font-size:15px}
+.rows{display:grid;gap:8px;margin-bottom:16px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;min-height:56px;padding:8px 14px;border-radius:18px;text-align:left;background:rgba(255,255,255,.14);border:1.5px solid transparent;transition:.25s;width:100%}
+.row.sel{border-color:var(--blue);background:rgba(91,140,255,.2);transform:scale(1.015)}
+.row.no{opacity:.7;cursor:default}
+.row b{display:block;color:var(--ink)}.row small{display:block;font-size:13px}.row .bad{color:var(--bad);font-weight:700}
+.btns{display:grid;gap:10px}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:99px;margin-bottom:16px}
+.seg i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:99px;background:linear-gradient(180deg,#7B7DFF,#3A2FE8);box-shadow:0 6px 16px rgba(58,47,232,.4);transition:transform .45s cubic-bezier(.3,1.4,.5,1)}
+.seg button{position:relative;min-height:46px;font-weight:700;color:var(--ink);transition:color .3s}
+.seg button.on{color:#fff}
+.tr{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:6px 20px 16px;scrollbar-width:none}
+.tr::-webkit-scrollbar{display:none}
+.tp{flex:0 0 78%;scroll-snap-align:center;padding:22px 20px;animation:pop .5s both}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.96)}}
+.tp h3{font-size:19px}.tp .pr{font-size:34px;font-weight:800;color:var(--ink);margin:6px 0 2px}.tp .pr small{font-size:14px;font-weight:500}
+.tp ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px;font-size:15px}
+.tp li{padding-left:24px;position:relative}.tp li::before{content:"";position:absolute;left:0;top:7px;width:12px;height:7px;border:solid var(--ok);border-width:0 0 2.5px 2.5px;transform:rotate(-45deg)}
+.tp li.x{opacity:.5}.tp li.x::before{border-color:var(--tx);border-width:0 0 2.5px;transform:none;height:0;top:11px}
+.dots{display:flex;justify-content:center;gap:8px;margin-bottom:14px}
+.dots i{width:8px;height:8px;border-radius:9px;background:rgba(120,150,210,.45);transition:.3s}.dots i.on{width:26px;background:var(--blue)}
+.note{padding:16px 18px;font-size:15px;margin-top:8px}
+.link{display:block;margin-top:12px;font-weight:700;color:var(--blue);min-height:44px;text-align:left}
+footer{padding:40px 20px calc(40px + env(safe-area-inset-bottom,0px));font-size:13px;opacity:.9}
+footer .logo{margin-bottom:8px}
+.shade{position:fixed;inset:0;z-index:50;background:rgba(5,20,60,.45);opacity:0;visibility:hidden;transition:.35s}
+.sheet{position:fixed;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:51;padding:12px 20px 22px;transform:translateY(120%);transition:transform .55s cubic-bezier(.2,1.1,.3,1);background:linear-gradient(140deg,rgba(255,255,255,.7),rgba(255,255,255,.4))}
+:root[data-theme="dark"] .sheet{background:linear-gradient(140deg,rgba(40,70,140,.7),rgba(20,40,100,.55))}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .sheet{background:linear-gradient(140deg,rgba(40,70,140,.7),rgba(20,40,100,.55))}}
+.so .shade{opacity:1;visibility:visible}.so .sheet{transform:none}
+.grab{width:44px;height:5px;border-radius:9px;background:rgba(120,150,210,.6);margin:0 auto 14px}
+.sheet h3{font-size:22px;margin-bottom:10px}
+.sheet pre{font:inherit;white-space:pre-wrap;padding:14px;border-radius:16px;background:rgba(255,255,255,.3);margin:0 0 14px;font-size:15px;color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);z-index:60;padding:12px 20px;border-radius:99px;color:var(--ink);font-weight:700;transform:translate(-50%,200%);transition:.45s cubic-bezier(.3,1.4,.5,1);white-space:nowrap}
+.toast.on{transform:translate(-50%,0)}
+.rv{opacity:0;transform:translateY(26px) scale(.98);filter:blur(6px);transition:.8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none;filter:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none;filter:none}html{scroll-behavior:auto}}
+
+.brand{font-weight:900;font-size:clamp(44px,15.5vw,70px);line-height:1;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.8);background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.95) 50%,transparent 62%) 160% 0/250% 100% no-repeat,linear-gradient(180deg,#A4AEFF 0%,#3A2FE8 42%,#171C9B 74%,#6A72FF 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 6px 10px rgba(58,47,232,.4));animation:sh 5s ease-in-out infinite}
+.brand.s{font-size:clamp(28px,9vw,42px);margin-bottom:14px}
+@keyframes sh{0%,30%{background-position:160% 0,0 0}70%,100%{background-position:-60% 0,0 0}}
+.hero h1{font-size:28px;line-height:1.15;margin:0 0 12px}
+.orb{position:absolute;left:-4px;bottom:4px;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#fff 0 7%,rgba(255,255,255,.55) 18%,rgba(140,150,255,.35) 56%,rgba(255,255,255,.75) 100%);box-shadow:inset -6px -8px 14px rgba(90,80,255,.35),0 16px 26px rgba(58,47,232,.35);animation:bob 7s ease-in-out infinite;z-index:2}
+.menu a{font-size:25px;padding:3px 0}.menu{gap:2px}
+.tg{display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px;color:var(--ink);margin-bottom:8px}.tg::before{content:"";width:4px;height:20px;border-radius:3px;background:var(--blue)}
+.s3{display:flex;gap:6px;margin:-6px 0 16px}.s3 span{flex:1;text-align:center;padding:9px 4px;border-radius:99px;font-size:12px;font-weight:700;background:var(--g);border:1px solid var(--gb);color:var(--ink);transition:.4s}.s3 span.on{background:linear-gradient(180deg,#7B7DFF,#3A2FE8);color:#fff;box-shadow:0 6px 16px rgba(58,47,232,.4)}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:0 -20px 14px;padding:0 20px;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:none;min-height:46px;padding:0 18px;border-radius:99px;font-weight:700;color:var(--ink);background:var(--g);border:1px solid var(--gb);transition:.3s}
+.tabs button.on{background:linear-gradient(180deg,#7B7DFF,#3A2FE8);color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(58,47,232,.4)}
+.map{padding:14px}.map svg{width:100%;display:block}.land{fill:rgba(255,255,255,.45);stroke:var(--gb);stroke-width:1.2}
+.pin{cursor:pointer;transition:.4s;transform-box:fill-box;transform-origin:center}.pu{fill:var(--blue);opacity:.3;transform-box:fill-box;transform-origin:center;animation:pl 2.4s infinite}.pd{fill:var(--blue);stroke:#fff;stroke-width:1.5}
+.pin.cold .pd{fill:#12A5D9}.pin.dim{opacity:.12;pointer-events:none}.pin.act .pd{fill:var(--ok);stroke-width:2.5}
+@keyframes pl{to{transform:scale(2.8);opacity:0}}
+.pi{margin-top:12px;padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.22);border:1px solid var(--gb);font-size:14px}.pi h3{font-size:17px;margin-bottom:4px}.pi .btns{grid-template-columns:1fr 1fr;margin-top:10px}.pi .btn{padding:0 10px;font-size:14px;min-height:46px}
+.dm{display:inline-block;padding:5px 12px;border-radius:99px;font-size:12px;font-weight:700;color:var(--ink);background:rgba(255,255,255,.4);border:1px solid var(--gb);margin-bottom:10px}
+.tw{padding:14px}.tw svg{width:100%;display:block}.zn{cursor:pointer}.gw{animation:gw 1.6s ease-in-out infinite}@keyframes gw{50%{filter:drop-shadow(0 0 8px #12A579)}}
+.of{padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;animation:pop .6s both}.of b{color:var(--ink)}.of.w{box-shadow:inset 0 1.5px 1px rgba(255,255,255,.8),0 0 28px rgba(18,165,121,.55)}
+.cab{padding:18px}.kp{display:grid;grid-template-columns:1fr 1fr;gap:10px}.kp div{padding:14px;border-radius:18px;background:rgba(255,255,255,.22);border:1px solid var(--gb);animation:pop .5s both}.kp b{display:block;font-size:22px;color:var(--ink)}.kp span{font-size:12px}
+.nv{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.nv span{padding:8px 14px;border-radius:99px;background:var(--g);border:1px solid var(--gb);font-weight:600;font-size:13px;color:var(--ink)}
+.sp{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}.sp span{flex:none;padding:10px 14px;border-radius:99px;font-size:13px;font-weight:700;background:var(--g);border:1px solid var(--gb);color:var(--ink);transition:.4s}.sp span.on{background:linear-gradient(180deg,#7B7DFF,#3A2FE8);color:#fff;box-shadow:0 6px 16px rgba(58,47,232,.4)}
+details.gl{padding:0 18px;margin-bottom:8px}summary{min-height:54px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:700;color:var(--ink);cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}summary em{font-style:normal;font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(58,47,232,.15);flex:none}details p{padding:0 0 14px;font-size:14px}
+.fm{padding:20px}.fm input,.fm textarea{width:100%;min-height:48px;padding:12px 16px;border-radius:16px;border:1.5px solid var(--gb);background:rgba(255,255,255,.92);color:#151A78;font:inherit;margin-bottom:4px}.fm textarea{min-height:90px}
+.fm label{display:block;font-weight:700;color:var(--ink);font-size:14px;margin:10px 0 6px}.er{color:var(--bad);font-size:13px;min-height:18px;font-weight:600}
+.ck{display:flex;gap:12px;align-items:flex-start;font-size:14px;margin:8px 0}.ck input{width:26px;min-height:26px;height:26px;flex:none;margin:0}
+.fl a{color:var(--blue);font-weight:700}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"><i></i><i></i><i></i></div>
+<div id="app">
+<header class="hd"><div class="gl">
+  <a class="logo" href="#top" aria-label="Резерв"><b></b>Резерв</a>
+  <button class="ic" id="mb" aria-label="Меню" aria-expanded="false"><span></span></button>
+</div>
+<nav class="menu" id="menu" aria-label="Основное меню">
+  <a href="#adv">Преимущества</a><a href="#how">Как работает</a><a href="#map">Карта</a><a href="#demo">Калькулятор</a><a href="#price">Тарифы</a><a href="#cab">Кабинеты</a><a href="#contact">Контакты</a><a href="#" id="login">Войти</a>
+  <button class="btn sec" id="th" style="margin-top:18px;align-self:flex-start">Сменить тему</button>
+</nav></header>
+
+<main id="top">
+<div class="wrap hero">
+  <div class="brand">РЕЗЕРВ</div><div class="brand s">Умная сеть</div><h1>Лучший склад<br>для вашего<br>груза</h1>
+  <p class="l">Подбираем склады по условиям хранения, сравниваем полную стоимость и помогаем оформить заявку.</p>
+  <a class="btn" href="#demo" style="display:inline-flex;align-items:center;text-decoration:none">Посмотреть демо</a>
+  <div class="scene" id="scene">
+    <svg viewBox="0 0 340 260" aria-hidden="true" id="iso"></svg>
+    <div class="orb"></div><div class="chip gl a">Склад подходит <em>✓</em></div>
+    <div class="chip gl b">Экономия <em>10,6%</em></div>
+  </div>
+  <p class="mt">Демонстрационные данные. Итоговое размещение подтверждает складской оператор.</p>
+</div>
+
+<section class="wrap rv">
+  <h2>Свободный склад не всегда подходит вашему грузу</h2>
+  <div class="card3">
+    <div class="gl pc"><span class="n">❄</span><h3>Условия хранения</h3><p>Режим и ограничения вашей партии.</p></div>
+    <div class="gl pc"><span class="n">₽</span><h3>Полная стоимость</h3><p>Хранение, операции и сопутствующие затраты.</p></div>
+    <div class="gl pc"><span class="n">✓</span><h3>Документы и ответственность</h3><p>Подтверждённый хранитель и этапы сделки.</p></div>
+  </div>
+</section>
+
+<section class="wrap rv" id="adv">
+  <h2>Преимущества</h2>
+  <div class="g2">
+    <div class="gl pc"><h3>Подбор по характеристикам</h3><p>Проверяем, примет ли склад именно ваш груз.</p></div>
+    <div class="gl pc"><h3>Экономика размещения</h3><p>Показываем полную стоимость, а не только цену хранения.</p></div>
+    <div class="gl pc"><h3>Прозрачные условия</h3><p>Документы и статусы в одном месте.</p></div>
+    <div class="gl pc"><h3>Свободные мощности сети</h3><p>Помогаем складам находить новые заказы.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="how">
+  <h2 style="text-align:center">Как работает Резерв</h2>
+  <div class="route" id="route">
+    <div class="road"></div>
+    <svg class="truck" id="truck" viewBox="0 0 22 46" height="46" aria-hidden="true"><rect x="2" y="0" width="18" height="30" rx="4" fill="#fff" stroke="#9CC4FF"/><rect x="3" y="31" width="16" height="14" rx="5" fill="#3A2FE8"/><rect x="5" y="38" width="12" height="4" rx="2" fill="#D2D4FF"/></svg>
+    <div class="gl st"><small>Шаг 1</small><h3>Опишите груз</h3><p>Параметры партии и срок.</p></div>
+    <div class="gl st"><small>Шаг 2</small><h3>Получите подбор</h3><p>Несовместимые склады исключаются с указанием причины.</p></div>
+    <div class="gl st"><small>Шаг 3</small><h3>Сравните полную стоимость</h3><p>Экономический советник сопоставляет варианты А, Б и В.</p></div>
+    <div class="gl st"><small>Шаг 4</small><h3>Отправьте заявку</h3><p>Склад подтверждает доступность и условия.</p></div>
+    <div class="gl st"><small>Шаг 5</small><h3>Контролируйте хранение</h3><p>Документы, приёмка и статусы исполнения.</p></div>
+  </div>
+</section>
+
+<section class="wrap rv" id="map"><div class="tg">Сеть складов</div><h2>Свободные мощности на карте</h2><span class="dm">Демо: условные склады</span>
+<div class="gl map"><div class="tabs" id="rg" style="margin:0 -14px 12px;padding:0 14px"></div>
+<div class="tabs" style="margin:0 -14px 8px;padding:0 14px"><button id="mc" aria-pressed="false">Только с температурным режимом</button></div>
+<div class="fld"><label for="mp">Свободно от <span id="mpv">0 паллет</span></label><input type="range" id="mp" min="0" max="800" step="50" value="0"></div>
+<svg viewBox="0 -10 360 200" id="ms" role="img" aria-label="Карта России с демонстрационными складами"><path class="land" id="land"/><g id="pins"></g></svg>
+<div class="pi" id="pi">Нажмите на точку, чтобы увидеть склад.</div><p class="mt" id="cmp">Сравнение: 0 из 3</p></div></section>
+<section class="wrap" id="demo">
+  <h2>Калькулятор</h2><div class="s3" id="s3"><span class="on">Груз</span><span>Склады и экономика</span><span>Заявка</span></div>
+  <p style="margin:-8px 0 16px">Посмотрите, как работает подбор. Двигайте ползунки — результат обновится сразу.</p>
+  <div class="gl calc">
+    <div class="fld"><label for="n">Количество паллет <span id="nv"></span></label><input type="range" id="n" min="10" max="1000" step="10" value="200"></div>
+    <div class="fld"><label for="d">Срок хранения <span id="dv"></span></label><input type="range" id="d" min="7" max="365" step="1" value="90"></div>
+    <div class="fld"><button class="tgl" id="tt" aria-pressed="true">Температурный режим +2…+8 °C<span class="sw"></span></button></div>
+    <div class="fld"><div class="lb">Операции</div><div class="chips" id="ops"></div></div>
+    <div class="bars" id="bars" aria-live="polite"></div>
+    <div class="sum" id="sum"></div>
+    <div class="rows" id="rows"></div>
+    <div class="btns"><button class="btn" id="pick">Выбрать склад</button><button class="btn sec" id="copy">Скопировать расчёт</button></div>
+    <p class="mt">Условные цены. Это не оферта и не окончательная котировка.</p>
+  </div>
+</section>
+
+<section class="wrap rv" id="twin"><div class="tg">Цифровой двойник</div><h2>Склад в деталях</h2>
+<div class="gl tw"><div class="tabs" id="tm" style="margin:0 -14px 10px;padding:0 14px"><button class="on">Общий вид</button><button>Зоны</button><button>Размещение партии</button></div>
+<svg viewBox="0 0 340 190" id="ts" role="img" aria-label="Изометрическая модель склада"></svg><div class="pi" id="tz">Нажмите на зону склада.</div>
+<p class="mt">Демонстрация: модель не подключена к WMS в реальном времени.</p></div></section>
+<section class="wrap" id="price">
+  <h2>Тарифы для каждого участника</h2>
+  <div class="gl seg" id="seg"><i id="thumb"></i><button class="on" data-r="0">Ищу склад</button><button data-r="1">Предоставляю склад</button></div>
+  <div class="tr" id="tr"></div>
+  <div class="dots" id="dots"></div>
+  <div class="gl note">Подписка оплачивает сервис, а хранение — напрямую складскому оператору. Комиссия платформы с бронирований — 0%.</div>
+  <button class="link" id="net">Управляете несколькими складами? Посмотреть сетевое решение</button>
+  <div class="gl note" id="netn" hidden>Единая сеть — 60 000 ₽/мес. (до 10 складов и 20 организаций). Расширенная — 100 000 ₽/мес. (до 30 складов и 50 организаций).</div>
+</section>
+<section class="wrap rv" id="tender"><div class="tg">Расширенный тариф</div><h2>Складской торг</h2><span class="dm">Планируется</span>
+<p style="margin-bottom:14px">Подходящие проверенные склады конкурируют предложениями. Победа определяется не только ставкой: важны совместимость, полные цены и подтверждение условий.</p>
+<div id="of"></div><button class="btn" id="tb" style="width:100%">Запустить демо-торг</button><p class="mt" id="tn"></p></section>
+<section class="wrap rv" id="cab"><div class="tg">Личные кабинеты</div><h2>Каждому участнику — свой рабочий экран</h2>
+<div class="tabs" id="ct"></div><div class="gl cab"><div class="kp" id="kp"></div><div class="nv" id="nv2"></div><p class="mt">Условные данные для демонстрации.</p></div></section>
+<section class="wrap rv"><div class="tg">От заявки до исполнения</div><h2>Путь заявки</h2>
+<div class="gl cab"><div class="sp" id="sp2"></div><p id="spt" style="min-height:48px;margin:6px 0 12px;font-weight:600;color:var(--ink)">Заявка создаётся как черновик.</p><button class="btn" id="spb" style="width:100%">Показать путь заявки</button></div></section>
+<section class="wrap rv"><div class="tg">Правила подбора</div><h2>Девять фильтров</h2><div id="f9"></div></section>
+<section class="wrap rv" id="contact"><h2>Подключите вашу организацию</h2>
+<form class="gl fm" id="fm" novalidate><div class="tabs" id="ft" style="margin:0 -20px 4px;padding:0 20px"><button type="button" class="on">Ищу склад</button><button type="button">Предоставляю склад</button><button type="button">Управляю складской сетью</button></div>
+<label for="f1">Название организации</label><input id="f1" autocomplete="organization">
+<label for="f2">Имя</label><input id="f2" autocomplete="name"><div class="er" id="e2"></div>
+<label for="f3">Рабочий email</label><input id="f3" type="email" inputmode="email" autocomplete="email"><div class="er" id="e3"></div>
+<label for="f4">Телефон</label><input id="f4" type="tel" autocomplete="tel">
+<label for="f5">Комментарий</label><textarea id="f5" placeholder="Регион, объём, запрос на пилот"></textarea>
+<label class="ck"><input type="checkbox" id="f6"><span>Согласен на обработку персональных данных. <a href="#" class="pl">Политика данных</a></span></label><div class="er" id="e6"></div>
+<button class="btn" style="width:100%" id="fs" type="submit">Отправить запрос</button><p class="mt" id="fr">Демо: запрос сохраняется только в браузере.</p></form></section>
+</main>
+
+<footer class="fl"><div class="logo"><b></b>Резерв</div><p>Оператор сервиса: сведения будут указаны после выбора юридического лица.</p><p style="margin:8px 0"><a href="#" class="pl">Условия сервиса</a> &nbsp; <a href="#" class="pl">Политика данных</a> &nbsp; <a href="#contact">Контакты</a></p><p>Демонстрационные данные. Реальные цены и доступность подтверждаются оператором. Версия: демо.</p></footer>
+</div>
+
+<div class="shade" id="shade"></div>
+<div class="gl sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Демо-заявка">
+  <div class="grab"></div><h3 id="sh">Демо-заявка</h3><pre id="sp"></pre>
+  <div class="btns"><button class="btn" id="go">Сформировать демо-заявку</button><button class="btn sec" id="cl">Закрыть</button></div>
+</div>
+<div class="gl toast" id="toast" role="status"></div>
+
+<script>
+var $=function(s){return document.querySelector(s)},RM=matchMedia("(prefers-reduced-motion:reduce)").matches;
+var fmt=function(v){return Math.round(v).toLocaleString("ru-RU")};
+function toast(t){var e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("on")},2000)}
+
+/* изометрическая сцена */
+(function(){
+  function box(x,y,w,d,h,c){var X=function(a,b){return(x+(a-b)*0.87).toFixed(1)},Y=function(a,b,z){return(y+(a+b)*0.5-z).toFixed(1)};
+    var p=function(pts){return pts.map(function(q){return X(q[0],q[1])+","+Y(q[0],q[1],q[2])}).join(" ")};
+    return '<polygon points="'+p([[0,0,h],[w,0,h],[w,d,h],[0,d,h]])+'" fill="'+c[0]+'"/><polygon points="'+p([[0,d,0],[w,d,0],[w,d,h],[0,d,h]])+'" fill="'+c[1]+'"/><polygon points="'+p([[w,0,0],[w,d,0],[w,d,h],[w,0,h]])+'" fill="'+c[2]+'"/>'}
+  var s='<polygon points="170,250 330,160 170,70 10,160" fill="rgba(255,255,255,.35)" stroke="rgba(255,255,255,.8)"/><polygon points="40,176 80,198 300,76 270,60" fill="rgba(21,26,120,.22)"/>';
+  s+=box(90,70,70,60,70,["#F2F3FF","#A9AEFF","#6F6CFF"])+box(180,90,60,50,46,["#E6E8FF","#9AA0FF","#6A6CFF"])+box(160,170,34,34,26,["#D2D4FF","#8F92FF","#5A4BFF"]);
+  s+='<rect x="108" y="112" width="26" height="22" rx="4" fill="#3A2FE8" opacity=".85"/>';
+  $("#iso").innerHTML=s})();
+var sc=$("#scene");
+sc.addEventListener("pointermove",function(e){if(RM)return;var r=sc.getBoundingClientRect();sc.style.setProperty("--ry",((e.clientX-r.left)/r.width-.5)*16+"deg");sc.style.setProperty("--rx",-((e.clientY-r.top)/r.height-.5)*12+"deg")});
+sc.addEventListener("pointerleave",function(){sc.style.setProperty("--rx","0deg");sc.style.setProperty("--ry","0deg")});
+
+/* стекло реагирует на касание */
+document.addEventListener("pointermove",function(e){var g=e.target.closest&&e.target.closest(".gl");if(!g)return;var r=g.getBoundingClientRect();g.style.setProperty("--mx",e.clientX-r.left+"px");g.style.setProperty("--my",e.clientY-r.top+"px");g.classList.add("hot");clearTimeout(g.h);g.h=setTimeout(function(){g.classList.remove("hot")},500)});
+document.addEventListener("pointerdown",function(e){var b=e.target.closest&&e.target.closest(".btn");if(!b||RM)return;var r=b.getBoundingClientRect(),s=Math.max(r.width,r.height)*2,i=document.createElement("span");i.className="rp";i.style.cssText="width:"+s+"px;height:"+s+"px;left:"+(e.clientX-r.left-s/2)+"px;top:"+(e.clientY-r.top-s/2)+"px";b.appendChild(i);setTimeout(function(){i.remove()},650)});
+
+/* меню и тема */
+var app=$("#app"),mb=$("#mb");
+function menu(o){app.classList.toggle("open",o);document.body.classList.toggle("lock",o);mb.setAttribute("aria-expanded",o)}
+mb.onclick=function(){menu(!app.classList.contains("open"))};
+document.querySelectorAll("#menu a").forEach(function(a){a.onclick=function(e){menu(false);if(a.id==="login"){e.preventDefault();toast("Вход доступен в рабочей версии")}}});
+$("#th").onclick=function(){var r=document.documentElement,d=(r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches);r.dataset.theme=d?"light":"dark"};
+
+/* скролл-сценарий: грузовик */
+var route=$("#route"),truck=$("#truck"),steps=document.querySelectorAll(".st");
+function onScroll(){
+  var r=route.getBoundingClientRect(),vh=innerHeight,p=Math.min(1,Math.max(0,(vh*.55-r.top)/r.height));
+  if(!RM){route.style.setProperty("--p",p);truck.classList.toggle("go",p>=.985)}
+  var best=null,bd=1e9;steps.forEach(function(s){var b=s.getBoundingClientRect(),d=Math.abs(b.top+b.height/2-vh*.55);if(d<bd){bd=d;best=s}});
+  steps.forEach(function(s){s.classList.toggle("on",s===best&&r.top<vh&&r.bottom>0)})}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll(".rv").forEach(function(e){io.observe(e)});
+
+/* калькулятор */
+var W=[{id:"А",reg:"Подмосковье",rate:46,ops:[250,280,280]},{id:"Б",reg:"Тверская область",rate:47,ops:[60,65,70]},{id:"В",reg:"Республика Татарстан",rate:50,ops:[45,50,55]},{id:"Г",reg:"Новосибирск",rate:42,ops:[40,40,40],t:"+10…+25 °C"}];
+var OPN=["Приёмка","Выдача","Комплектация"],S={n:200,d:90,t:true,o:[1,1,1],sel:"Б"},shown={},calc=[];
+OPN.forEach(function(n,i){var b=document.createElement("button");b.className="cp";b.textContent=n;b.setAttribute("aria-pressed","true");b.onclick=function(){S.o[i]=S.o[i]?0:1;b.setAttribute("aria-pressed",!!S.o[i]);upd()};$("#ops").appendChild(b)});
+$("#tt").onclick=function(){S.t=!S.t;this.setAttribute("aria-pressed",S.t);upd()};
+["n","d"].forEach(function(k){var e=$("#"+k);e.oninput=function(){S[k]=+e.value;upd()}});
+function tco(w){var o=w.ops.reduce(function(a,v,i){return a+v*S.o[i]},0);return S.n*S.d*w.rate+S.n*o}
+function upd(){
+  $("#nv").textContent=S.n+" шт.";$("#dv").textContent=S.d+" дн.";
+  ["n","d"].forEach(function(k){var e=$("#"+k);e.style.setProperty("--v",(e.value-e.min)/(e.max-e.min)*100+"%")});
+  calc=W.map(function(w){var no=S.t&&w.t;return{w:w,no:no,v:no?0:tco(w)}});
+  var ok=calc.filter(function(c){return!c.no});
+  if(!ok.length){$("#bars").innerHTML="";$("#rows").innerHTML="";$("#sum").textContent="Пока нет складов, полностью соответствующих заданным требованиям.";return}
+  var min=Math.min.apply(0,ok.map(function(c){return c.v})),max=Math.max.apply(0,ok.map(function(c){return c.v})),best=ok.filter(function(c){return c.v===min})[0],worst=ok.filter(function(c){return c.v===max})[0];
+  if(!ok.some(function(c){return c.w.id===S.sel}))S.sel=best.w.id;
+  var bars=$("#bars");if(bars.children.length!==ok.length){bars.innerHTML=ok.map(function(c){return'<div class="bar" data-id="'+c.w.id+'"><span></span><div style="height:0"></div>'+c.w.id+'</div>'}).join("");requestAnimationFrame(function(){upd()});return}
+  ok.forEach(function(c,i){var b=bars.children[i];b.dataset.id=c.w.id;b.lastChild.textContent=c.w.id;b.className="bar"+(c===best?" best":"");b.children[1].style.height=Math.max(12,c.v/max*130)+"px";count(b.firstChild,c.v)});
+  $("#sum").innerHTML=ok.length>1&&max>min?"Лучшая полная стоимость — склад "+best.w.id+", экономия "+fmt(max-min)+" ₽ к складу "+worst.w.id+" ("+((max-min)/max*100).toFixed(1).replace(".",",")+"%). Результат зависит от исходных тарифов.":"Лучшая полная стоимость — склад "+best.w.id+". Результат зависит от исходных тарифов.";
+  $("#rows").innerHTML=calc.map(function(c){return c.no?'<div class="row no"><span><b>Склад '+c.w.id+' · '+c.w.reg+'</b><small class="bad">Исключён: режим склада '+c.w.t+' не покрывает +2…+8 °C</small></span></div>':'<button class="row'+(c.w.id===S.sel?" sel":"")+'" data-id="'+c.w.id+'"><span><b>Склад '+c.w.id+' · '+c.w.reg+'</b><small>'+(c===best?"Лучшая полная стоимость":"Подходит по требованиям")+'</small></span><b>'+fmt(c.v)+' ₽</b></button>'}).join("");
+  document.querySelectorAll(".row[data-id]").forEach(function(r){r.onclick=function(){S.sel=r.dataset.id;upd()}})}
+function count(el,to){var from=shown[el.parentNode.dataset.id]||0;shown[el.parentNode.dataset.id]=to;if(RM){el.textContent=Math.round(to/1000)+" тыс. ₽";return}var t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/600),v=from+(to-from)*(1-Math.pow(1-k,3));el.textContent=Math.round(v/1000)+" тыс. ₽";if(k<1)requestAnimationFrame(f)})(t0)}
+function text(){var c=calc.filter(function(c){return c.w.id===S.sel})[0];if(!c)return"";var ops=OPN.filter(function(n,i){return S.o[i]}).join(", ")||"без операций";return"Склад "+c.w.id+" ("+c.w.reg+")\nПаллет: "+S.n+"\nСрок: "+S.d+" дн.\nРежим: "+(S.t?"+2…+8 °C":"без температурного режима")+"\nОперации: "+ops+"\nПолная стоимость: "+fmt(c.v)+" ₽ (условные цены)"}
+$("#copy").onclick=function(){var b=this;try{navigator.clipboard.writeText(text()).then(function(){toast("Расчёт скопирован")},function(){toast("Не удалось скопировать")})}catch(e){toast("Не удалось скопировать")}};
+function sheet(o){app.parentNode.classList.toggle("so",o);document.body.classList.toggle("lock",o)}
+$("#pick").onclick=function(){$("#sh").textContent="Демо-заявка";$("#sp").textContent=text();$("#go").disabled=false;$("#go").textContent="Сформировать демо-заявку";sheet(true)};
+$("#go").onclick=function(){var b=this;b.disabled=true;$("#sh").textContent="Заявка отправлена";$("#sp").textContent=text()+"\n\nДемо-заявка сформирована. Реальное размещение не подтверждено.";b.textContent="Готово"};
+$("#cl").onclick=$("#shade").onclick=function(){sheet(false)};
+addEventListener("keydown",function(e){if(e.key==="Escape"){sheet(false);menu(false)}});
+upd();
+
+/* тарифы */
+var T=[[["Старт","9 900",["2 сотрудника","5 активных заявок","5 TCO-расчётов в месяц","Сравнения до 3","История 3 месяца","!What-if"]],["Профессиональный","20 000",["5 сотрудников","20 активных заявок","30 TCO-расчётов в месяц","Сравнения до 10","История 12 месяцев","What-if"]],["Расширенный","35 000",["15 сотрудников","50 активных заявок","100 TCO-расчётов в месяц","Сравнения без лимита","Складской торг: 3 запуска в месяц","История без ограничения"]]],
+[["Старт","0",["1 сотрудник","1 объект","3 активных предложения","Базовый календарь","Участие в торгах после проверки","!Аналитика"]],["Профессиональный","12 000",["3 сотрудника","3 объекта","20 активных предложений","Полный календарь","Участие в торгах","Аналитика"]],["Расширенный","25 000",["10 сотрудников","10 объектов","50 активных предложений","Полный календарь","Участие в торгах","Расширенная аналитика"]]]],role=0,tr=$("#tr");
+function tariffs(){tr.innerHTML=T[role].map(function(t,i){return'<div class="gl tp" style="animation-delay:'+i*.07+'s"><h3>'+t[0]+'</h3><div class="pr">'+t[1]+' ₽<small>/мес. за организацию</small></div><ul>'+t[2].map(function(x){return x[0]==="!"?'<li class="x">'+x.slice(1)+'</li>':"<li>"+x+"</li>"}).join("")+'</ul></div>'}).join("");$("#dots").innerHTML="<i class='on'></i><i></i><i></i>";tr.scrollLeft=0}
+tr.addEventListener("scroll",function(){var k=Math.round(tr.scrollLeft/(tr.scrollWidth-tr.clientWidth)*2);document.querySelectorAll("#dots i").forEach(function(d,i){d.classList.toggle("on",i===k)})},{passive:true});
+document.querySelectorAll("#seg button").forEach(function(b){b.onclick=function(){role=+b.dataset.r;$("#thumb").style.transform="translateX("+role*100+"%)";document.querySelectorAll("#seg button").forEach(function(x){x.classList.toggle("on",x===b)});tariffs()}});
+$("#net").onclick=function(){$("#netn").hidden=!$("#netn").hidden};
+tariffs();
+
+/* ===== новые блоки ===== */
+function ib(x,y,w,d,h,c){var P=function(l){return l.map(function(q){return(x+(q[0]-q[1])*.87).toFixed(1)+","+(y+(q[0]+q[1])*.5-q[2]).toFixed(1)}).join(" ")};return'<polygon points="'+P([[0,0,h],[w,0,h],[w,d,h],[0,d,h]])+'" fill="'+c[0]+'"/><polygon points="'+P([[0,d,0],[w,d,0],[w,d,h],[0,d,h]])+'" fill="'+c[1]+'"/><polygon points="'+P([[w,0,0],[w,d,0],[w,d,h],[w,0,h]])+'" fill="'+c[2]+'"/>'}
+document.querySelectorAll(".pl").forEach(function(a){a.onclick=function(e){e.preventDefault();toast("Документ будет доступен в рабочей версии")}});
+/* шаги демо */
+var s3=document.querySelectorAll("#s3 span");function stp(i){s3.forEach(function(x,k){x.classList.toggle("on",k<=i)})}
+$("#demo").addEventListener("input",function(){stp(1)});$("#demo").addEventListener("click",function(e){if(e.target.closest(".cp,.tgl,.row"))stp(1)});$("#pick").addEventListener("click",function(){stp(2)});
+/* карта */
+$("#land").setAttribute("d","M"+[[28,70],[41,67],[60,69],[68,73],[80,73],[100,77],[113,74],[140,72],[160,70],[180,68],[180,65],[170,60],[163,56],[156,51],[143,53],[140,48],[131,43],[135,48],[127,50],[117,50],[108,50],[98,51],[87,49],[80,51],[68,55],[61,51],[48,47],[47,43],[38,45],[38,48],[32,52],[28,56],[28,60],[30,62],[29,66]].map(function(q){return((q[0]-20)*2.2).toFixed(1)+","+((76-q[1])*5.2).toFixed(1)}).join("L")+"Z");
+var CT=[["Москва",37.6,55.7,"Центр"],["Воронеж",39.2,51.7,"Центр"],["Санкт-Петербург",30.3,59.9,"Северо-Запад"],["Краснодар",39,45,"Юг"],["Ростов-на-Дону",39.7,47.2,"Юг"],["Казань",49.1,55.8,"Поволжье"],["Самара",50.1,53.2,"Поволжье"],["Нижний Новгород",44,56.3,"Поволжье"],["Екатеринбург",60.6,56.8,"Урал"],["Челябинск",61.4,55.2,"Урал"],["Омск",73.4,55,"Сибирь"],["Новосибирск",83,55,"Сибирь"],["Красноярск",92.9,56,"Сибирь"],["Иркутск",104.3,52.3,"Сибирь"],["Владивосток",131.9,43.1,"Дальний Восток"]],sd=7,Rn=function(){sd=(sd*9301+49297)%233280;return sd/233280},O=[],M={r:"Все",c:false,m:0},cmp=[],cur=-1;
+CT.forEach(function(c){for(var k=0;k<2;k++)O.push({id:"РЗ-"+("00"+(O.length+1)).slice(-3),city:c[0],reg:c[3],x:(c[1]-20)*2.2+(Rn()-.5)*12,y:(76-c[2])*5.2+(Rn()-.5)*12,free:Math.round((80+Rn()*900)/10)*10,cold:Rn()>.5,rate:Math.round(42+Rn()*18)})});
+$("#pins").innerHTML=O.map(function(o,i){return'<g class="pin'+(o.cold?" cold":"")+'" data-i="'+i+'"><circle r="13" fill="transparent"/><circle class="pu" cx="0" cy="0" r="5"/><circle class="pd" r="4.5"/></g>'}).join("");
+document.querySelectorAll(".pin").forEach(function(g,i){var o=O[i];g.setAttribute("transform","translate("+o.x.toFixed(1)+","+o.y.toFixed(1)+")");g.firstChild.setAttribute("cx",0);g.onclick=function(){cur=i;pinfo()}});
+function mf(){document.querySelectorAll(".pin").forEach(function(g,i){var o=O[i],ok=(M.r==="Все"||o.reg===M.r)&&(!M.c||o.cold)&&o.free>=M.m;g.classList.toggle("dim",!ok);g.classList.toggle("act",i===cur)})}
+function pinfo(){var o=O[cur];$("#pi").innerHTML='<h3>'+o.id+' · '+o.city+'</h3><p>'+o.reg+' · режим '+(o.cold?"+2…+8 °C":"сухой склад")+'<br>Свободно: '+o.free+' паллето-мест<br>Услуги: приёмка, выдача, комплектация<br>Цена: '+o.rate+' ₽ за паллето-сутки (условно)</p><div class="btns"><button class="btn sec" id="op">Открыть паспорт</button><button class="btn" id="ad">'+(cmp.indexOf(cur)<0?"Сравнить":"Убрать")+'</button></div>';
+  $("#op").onclick=function(){toast("Паспорт открывается в рабочей версии")};
+  $("#ad").onclick=function(){var k=cmp.indexOf(cur);if(k>=0)cmp.splice(k,1);else if(cmp.length>=3){toast("Достигнут лимит тарифа. Можно выбрать следующий уровень или дополнительный пакет.");return}else cmp.push(cur);$("#cmp").textContent="Сравнение: "+cmp.length+" из 3";pinfo()};mf()}
+$("#rg").innerHTML=["Все","Центр","Северо-Запад","Юг","Поволжье","Урал","Сибирь","Дальний Восток"].map(function(r,i){return'<button'+(i?"":' class="on"')+'>'+r+'</button>'}).join("");
+document.querySelectorAll("#rg button").forEach(function(b){b.onclick=function(){M.r=b.textContent;document.querySelectorAll("#rg button").forEach(function(x){x.classList.toggle("on",x===b)});mf()}});
+$("#mc").onclick=function(){M.c=!M.c;this.setAttribute("aria-pressed",M.c);this.classList.toggle("on",M.c);mf()};
+$("#mp").oninput=function(){M.m=+this.value;this.style.setProperty("--v",this.value/8+"%");$("#mpv").textContent=M.m+" паллет";mf()};
+/* цифровой двойник */
+var Z=[{n:"Холодная зона",t:"+2…+8 °C",cap:420,ty:"Стеллажное, с температурным режимом",ok:"фармацевтика, молочная и пищевая продукция",o:[130,10],c:["#DFF7FF","#7FD4F2","#3FB4E0"]},{n:"Сухое хранение",t:"+10…+25 °C",cap:1200,ty:"Стеллажное и напольное",ok:"непродовольственные товары, тара",o:[230,50],c:["#EDE6FF","#B79CFF","#8A63F0"]},{n:"Приёмка и отгрузка",t:"без хранения",cap:60,ty:"Буферная зона у ворот",ok:"любые партии на время обработки",o:[110,100],c:["#FFEAF3","#F5A8CC","#E070A5"]}],tm=0,tz=-1;
+function twin(){var g="";Z.forEach(function(z,k){var n=["#F2F3FF","#B7BDFF","#8C92FF"],c=tm===1?z.c:n,dim=tm===2&&k!==0;g+='<g class="zn" data-z="'+k+'" opacity="'+(dim?.4:1)+'">'+ib(z.o[0],z.o[1],62,42,3,["rgba(255,255,255,.7)","#C9CEFF","#AEB4FF"]);
+  for(var i=0;i<3;i++)for(var j=0;j<2;j++){var a=8+i*17,b=7+j*17,px=z.o[0]+(a-b)*.87,py=z.o[1]+(a+b)*.5,w=tm===2&&k===0?'<g class="gw">'+ib(px,py,13,13,18,["#7CF0C4","#12A579","#0E8562"])+'</g>':ib(px,py,13,13,18,c);g+=w}
+  g+=(tz===k?'<text x="'+(z.o[0]-20)+'" y="'+(z.o[1]-6)+'" font-size="10" font-weight="800" fill="#151A78">'+z.n+'</text>':"")+'</g>'});
+  $("#ts").innerHTML=g;document.querySelectorAll(".zn").forEach(function(e){e.onclick=function(){tz=+e.dataset.z;twin()}});
+  var z=Z[tz];$("#tz").innerHTML=tm===2?"Партия 200 паллет размещена в холодной зоне: из 420 мест останется 220 (демо).":z?'<h3>'+z.n+'</h3>Ёмкость: '+z.cap+' паллето-мест<br>Хранение: '+z.ty+'<br>Режим: '+z.t+'<br>Допустимый груз: '+z.ok:"Нажмите на зону склада."}
+document.querySelectorAll("#tm button").forEach(function(b,i){b.onclick=function(){tm=i;document.querySelectorAll("#tm button").forEach(function(x){x.classList.toggle("on",x===b)});twin()}});
+twin();mf();
+/* торг */
+$("#tb").onclick=function(){var b=this,ok=calc.filter(function(c){return!c.no}).sort(function(a,b){return a.v-b.v});b.disabled=true;var box=$("#of");box.innerHTML="";$("#tn").textContent="Идёт торг…";
+  ok.forEach(function(c,i){setTimeout(function(){var d=document.createElement("div");d.className="gl of";d.innerHTML='<span><b>Склад '+c.w.id+'</b><br><small>'+c.w.reg+' · совместим</small></span><b class="pv">'+fmt(c.v*1.07)+' ₽</b>';box.appendChild(d);setTimeout(function(){var e=d.querySelector(".pv"),t0=performance.now(),f=c.v*1.07;(function s(t){var k=Math.min(1,(t-t0)/900);e.textContent=fmt(f-(f-c.v)*k)+" ₽";if(k<1)requestAnimationFrame(s);else if(i===ok.length-1){box.children[0].classList.add("w");$("#tn").textContent="Лучшее предложение — склад "+ok[0].w.id+": по итогам проверки совместимости и полной стоимости. Демонстрационные данные.";b.disabled=false;b.textContent="Запустить ещё раз"}})(t0)},500)},i*700)})};
+/* кабинеты */
+var CB=[["Ищу склад",[["Активные запросы","4 из 5"],["Ждут подтверждения","2"],["Действующие хранения","1"],["Экономия (оценка)","105 тыс. ₽"]],["Обзор","Мои грузы","Подбор","Сравнения","Заявки","Тендеры","Документы"]],["Предоставляю склад",[["Доступно сейчас","640 мест"],["Ожидающие заявки","3"],["Подтверждено","7"],["Заполнение","72%"]],["Паспорт склада","Календарь мощности","Заявки и предложения","Аналитика"]],["Управляю сетью",[["Объекты","8"],["Организации","12"],["Загрузка сети","68%"],["Отчёты","3 готовы"]],["Сводные показатели","Объекты","Роли","Отчётность"]],["Администратор",[["Проверки","5"],["Договоры","2"],["Инциденты","0"],["Настройки данных","—"]],["Верификация","Договоры","Инциденты","Настройки"]]];
+$("#ct").innerHTML=CB.map(function(c,i){return'<button'+(i?"":' class="on"')+'>'+c[0]+'</button>'}).join("");
+function cab(i){var c=CB[i];$("#kp").innerHTML=c[1].map(function(k,j){return'<div style="animation-delay:'+j*.06+'s"><b>'+k[1]+'</b><span>'+k[0]+'</span></div>'}).join("");$("#nv2").innerHTML=c[2].map(function(n){return"<span>"+n+"</span>"}).join("")}
+document.querySelectorAll("#ct button").forEach(function(b,i){b.onclick=function(){document.querySelectorAll("#ct button").forEach(function(x){x.classList.toggle("on",x===b)});cab(i)}});cab(0);
+/* путь заявки */
+var SS=["Черновик","Отправлена","На уточнении","Ожидает подтверждения","Подтверждена","Хранение активно","Завершена"],ST=["Заявка создаётся как черновик.","Заявка отправлена. Ожидаем подтверждения складского оператора.","Стороны уточняют условия, версии сохраняются в журнале.","Оператор подтверждает цену, ёмкость и дату.","Подтверждено оператором: можно переходить к договору и приёмке.","Хранение активно: события, акты и SLA.","Акт выдачи оформлен, заявка в архиве."];
+$("#sp2").innerHTML=SS.map(function(x,i){return'<span'+(i?"":' class="on"')+'>'+x+'</span>'}).join("");
+$("#spb").onclick=function(){var b=this,k=0,el=document.querySelectorAll("#sp2 span");b.disabled=true;var t=setInterval(function(){k++;el.forEach(function(e,i){e.classList.toggle("on",i===k)});el[k].scrollIntoView({inline:"center",block:"nearest",behavior:"smooth"});$("#spt").textContent=ST[k];if(k>=SS.length-1){clearInterval(t);b.disabled=false}},1100)}
+/* девять фильтров */
+var F9=[["Категория товара","Жёсткий","Склад принимает категорию; запрещённые товары блокируются."],["Температура","Жёсткий","Диапазон склада покрывает весь требуемый диапазон."],["Влажность и соседство","Жёсткий","Соблюдены ограничения хранения и совместимости."],["Ёмкость и габариты","Жёсткий","Хватает паллето-мест, нагрузок, высоты и ширины."],["Срок и даты","Жёсткий","Мощность доступна в требуемом окне."],["Операции","Жёсткий","Склад выполняет обязательные приёмку, выдачу и обработку."],["Законность допуска","Жёсткий","Правовое основание, документы и статус проверки."],["Полная стоимость","Ранжирование","Стоимость сопоставляется после прохождения жёстких фильтров."],["Доступность и SLA","Ранжирование","Локация, срок обработки и подтверждённые показатели."]];
+$("#f9").innerHTML=F9.map(function(f,i){return'<details class="gl"><summary>'+(i+1)+'. '+f[0]+'<em>'+f[1]+'</em></summary><p>'+f[2]+' Каждый отказ показывается с причиной.</p></details>'}).join("");
+/* форма */
+document.querySelectorAll("#ft button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#ft button").forEach(function(x){x.classList.toggle("on",x===b)})}});
+$("#fm").onsubmit=function(e){e.preventDefault();var ok=true;function v(c,id,m){$("#e"+id).textContent=c?"":m;if(!c)ok=false}
+  v($("#f2").value.trim(),2,"Укажите имя.");v(/^\S+@\S+\.\S+$/.test($("#f3").value),3,"Введите email в формате name@company.ru.");v($("#f6").checked,6,"Нужно согласие на обработку данных.");
+  if(!ok)return;var b=$("#fs");b.disabled=true;b.textContent="Отправляем…";setTimeout(function(){b.textContent="Запрос отправлен";$("#fr").textContent="Демо: запрос сохранён локально, реальная отправка подключается вместе с серверной частью."},900)};
+</script>
+</body>
+</html>
